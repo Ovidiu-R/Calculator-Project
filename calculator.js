@@ -13,73 +13,93 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function buttonHandler(button) {
-        switch (button){
-            case (button.class == 'num' && operator == null):
+        switch (true){
+            case (button.classList.contains ('num') && operator == null):
                   a += button.id;
                   break;
-            case (button.class == 'num' && operator != null):
+            case (button.classList.contains ('num') && operator != null):
                   b += button.id;
                   break;
-            case (button.class == 'op' && operator != null):
+            case (button.classList.contains ('op') && b == ""):
                   operator = button.textContent;
-            case (button.class == 'special'):
-                  specialHandler(button);
-        }
-    }
-
-    function specialHandler(button){
-        switch (button){
+                  display2.textContent = a + operator;
+                  break;
+            case (button.classList.contains ('op') && b != ""):
+                  operate();
+                  break;
             case (button.id == 'ac'):
-                reset();
-                break;
+                  reset();
+                  break;
             case (button.id == 'del'):
-                undo();
-                break;
+                  undo();
+                  break;
             case (button.id == 'equals'):
-                operate();
-                break;
+                  operate();
+                  reset();
+                  break;
         }
     }
 
-    function addition(a,b){
-        return a + b;
+    function addition(){
+        display1.textContent = (a + b);
+        a = a + b;
     }
 
-    function subtraction(a,b){
-        return a - b;
+    function subtraction(){
+        display1.textContent = (a - b);
+        a = a - b;
     }
 
-    function multiplication(a,b){
-        return a * b;
+    function multiplication(){
+        display1.textContent = (a * b);
+        a = a * b;
     }
 
-    function division(a,b){
-        return a / b;
+    function division(){
+        display1.textContent = (a / b);
+        a = a / b;
     }
 
-    function percent(a,b){
+    function percent(){
         if (a != "" && b == ""){
-            return a/100;
+            return parseInt(a)/100;
         } else if (a != "" && b != ""){
-            return 
+            return parseInt(b)/100;
         }
     }
 
-    function operate(a, b, operator){
+    function operate(){
+        a = parseInt(a);
+        b = parseInt(b);
         switch (operator){
             case "+":
-                addition(a,b);
+                addition();
                 break;
             case "-":
-                subtraction(a,b);
+                subtraction();
                 break;
             case "*":
-                multiplication(a,b);
+                multiplication();
                 break;
             case "/":
-                division(a,b);
+                division();
+                break;
+            case "%":
+                percent();
                 break;
         }
+    }
+
+    function reset(){
+        a = "";
+        b = "";
+        operator = "";
+        display1.textContent = "0";
+        display2.textContent = "";
+    }
+
+    function undo(){
+
     }
 
 });
