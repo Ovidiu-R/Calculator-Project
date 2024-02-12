@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const buttons = document.querySelectorAll('button');
     const display1 = document.getElementById('primaryDisplay');
     const display2 = document.getElementById('secondaryDisplay');
-    let operator = null;
+    let operator = "";
     let a = "";
     let b = "";
 
@@ -14,57 +14,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function buttonHandler(button) {
         switch (true){
-            case (button.classList.contains ('num') && operator == null):
+            case (button.classList.contains ('num') && operator === ""):
                   a += button.id;
+                  display1.textContent = a;
                   break;
-            case (button.classList.contains ('num') && operator != null):
+            case (button.classList.contains ('num') && operator !== ""):
                   b += button.id;
+                  display1.textContent = (a + operator + b);
                   break;
-            case (button.classList.contains ('op') && b == ""):
+            case (button.classList.contains ('op') && b === ""):
                   operator = button.textContent;
                   display2.textContent = a + operator;
                   break;
-            case (button.classList.contains ('op') && b != ""):
+            case (button.classList.contains ('op') && b !== ""):
+                  if (button.id === "percent") {
+                    percent();
+                  } else{
                   operate();
                   break;
-            case (button.id == 'ac'):
+                  }
+            case (button.id === 'ac'):
                   reset();
                   break;
-            case (button.id == 'del'):
+            case (button.id === 'del'):
                   undo();
                   break;
-            case (button.id == 'equals'):
-                  operate();
-                  reset();
-                  break;
+            case (button.id === 'equals'):
+                  if (a !== "" && b!== "" && operator !== ""){
+                    operate();
+                    // reset();
+                    break;
+                  } else {
+                    break;}
+                  
         }
     }
 
     function addition(){
-        display1.textContent = (a + b);
+        display1.textContent = a + b;
         a = a + b;
-    }
+        b = "";    }
 
     function subtraction(){
-        display1.textContent = (a - b);
+        display1.textContent = a - b;
         a = a - b;
+        b = "";
     }
 
     function multiplication(){
-        display1.textContent = (a * b);
+        display1.textContent = a * b;
         a = a * b;
+        b = "";
     }
 
     function division(){
-        display1.textContent = (a / b);
+        display1.textContent = a / b;
         a = a / b;
+        b = "";
+
     }
 
     function percent(){
-        if (a != "" && b == ""){
-            return parseInt(a)/100;
-        } else if (a != "" && b != ""){
-            return parseInt(b)/100;
+        if (a !== "" && b === ""){
+            a = a/100
+            display1.textContent = a;
+        } else if (a !== "" && b !== ""){
+            b = b/100;
+            display1.textContent = a + operator + b;
         }
     }
 
