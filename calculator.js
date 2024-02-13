@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const display1 = document.getElementById('primaryDisplay');
     const display2 = document.getElementById('secondaryDisplay');
     let opData = [];
+    let displayFlag = false;
+    let percentTarget = "";
 
     buttons.forEach (button => {
         button.addEventListener('click', () => {
@@ -40,19 +42,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 opData[1] = button.textContent;
                 updateDisplay(1);
             case button.classList.contains('op') && opData.length == 3:
+                let newOperator = button.textContent;
                 operate(opData);
-                updateDisplay(2);
+                opData[1] = newOperator;
+                updateDisplay(4);
+                displayFlag = true;
                 break;
             case button.id == 'equals' && opData.length == 3:
+                updateDisplay(3);
                 operate(opData);
                 break;
-            case button.id == 'percent' && opData.length !=0:
-                opData[1] = button.textContent;
-                operate(opData);
+            case button.id == 'percent' && opData.length !=0 && opData.length != 2:
+                if (opData.length = 1) {
+                    percentTarget = "first";
+                    operate(opData);
+                } else {
+                    percentTarget = "second";
+                    operate(opData);
+                }
                 break;
             case button.id == 'ac':
                 reset();
-                updateDisplay();
+                updateDisplay(6);
                 break;
             case button.id == 'undo':
                 undo();
@@ -69,10 +80,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 display1.textContent = opData[0] + opData[1];
                 break;
             case 2:
-                display1.textContent = opData[0] + opData[1] + opData[2];
+                if (displayFlag) {
+                    display1.textContent = opData[2];
+                    displayFlag = false;
+                }
+                else {
+                    display1.textContent = opData[0] + opData[1] + opData[2];
+                }
                 break;
-            default:
+            case 3:
+                display2.textContent = opData[0] + opData[1] + opData[2] + "=";
+                break;
+            case 4:
+                display2.textContent = opData[0] + opData[1];
+                display1.textContent = "";
+                break;
+            case 5:
+                if (opData.length == 1){
+                    opData[0] 
+                } else{
+
+                }
+                break;
+            case 6:
                 display1.textContent = 0;
+                display2.textContent = "";
+                break;
         }
     }
 
@@ -107,14 +140,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function percent(a,b){
-        switch (opData.length){
-            case 1:
-                opData[1].textContent = a/100;
+        switch (percentTarget){
+            case "first":
+                opData[0] = a/100;
                 updateDisplay(0);
                 break;
-            case 3:
-                opData[2].textContent = b/100;
+            case "second":
+                opData[2] = b/100;
                 updateDisplay(2);
+                break;
+            default:
+                break;
         }
     }
 
@@ -134,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
         case '/':
             division (a,b);
             break;
-        case '%':
+        default:
             percent (a,b);
             break;
        }
