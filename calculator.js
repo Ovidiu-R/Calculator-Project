@@ -41,29 +41,33 @@ document.addEventListener('DOMContentLoaded', () => {
             case button.classList.contains('op') && opData.length == 2:
                 opData[1] = button.textContent;
                 updateDisplay(1);
+                break;
+            case button.id == 'percent' && opData.length == 1 || opData.length == 3:
+                    if (opData.length == 1) {
+                        percentTarget = "first";
+                        operate('%');
+                        break;
+                    } else if (opData.length == 3) {
+                        percentTarget = "second";
+                        operate('%');
+                        break;
+                    }
+                    break;
             case button.classList.contains('op') && opData.length == 3:
                 let newOperator = button.textContent;
-                operate(opData);
+                operate(opData[1]);
                 opData[1] = newOperator;
                 updateDisplay(4);
                 displayFlag = true;
                 break;
+            
             case button.id == 'equals' && opData.length == 3:
-                updateDisplay(3);
-                operate(opData);
-                break;
-            case button.id == 'percent' && opData.length !=0 && opData.length != 2:
-                if (opData.length = 1) {
-                    percentTarget = "first";
-                    operate(opData);
-                } else {
-                    percentTarget = "second";
-                    operate(opData);
-                }
-                break;
+                    updateDisplay(3);
+                    operate(opData[1]);
+                    break;
             case button.id == 'ac':
                 reset();
-                updateDisplay(6);
+                updateDisplay(5);
                 break;
             case button.id == 'undo':
                 undo();
@@ -96,13 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 display1.textContent = "";
                 break;
             case 5:
-                if (opData.length == 1){
-                    opData[0] 
-                } else{
-
-                }
-                break;
-            case 6:
                 display1.textContent = 0;
                 display2.textContent = "";
                 break;
@@ -154,10 +151,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function operate(){
+    function operate(operator){
        let a = parseFloat (opData[0]);
        let b = parseFloat (opData[2]);
-       switch (opData[1]){
+       switch (operator){
         case '+':
             addition (a,b);
             break;
@@ -170,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         case '/':
             division (a,b);
             break;
-        default:
+        case '%':
             percent (a,b);
             break;
        }
