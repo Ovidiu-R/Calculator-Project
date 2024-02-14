@@ -38,6 +38,7 @@ button{
     width: 78px;
     height: 78px;
     border-radius: 12px;
+    font-size: 22px;
 }
 
 button:hover{
@@ -84,17 +85,17 @@ p {
 }
 
 .op{
-    background-color: green;
+    background-color: rgb(74, 109, 235);
 }
 
 #percent{
-    background-color: green;
+    background-color: rgb(74, 109, 235);
 }
 
 .num, #point {
-    background-color: skyblue;
+    background-color: rgb(60, 182, 230);
 }
 
 #equals{
-    background-color: yellow;
+    background-color: rgb(29, 64, 190);
 }
