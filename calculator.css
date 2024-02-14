@@ -73,7 +73,7 @@ p {
     background-color: green;
 }
 
-.num {
+.num, #point {
     background-color: skyblue;
 }
 

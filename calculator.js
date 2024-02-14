@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let opData = [];
     let displayFlag = false;
     let percentTarget = "";
-    let percentFlag = false;
 
     buttons.forEach (button => {
         button.addEventListener('click', () => {
@@ -20,25 +19,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateDisplay(0);
                 break;
             case button.classList.contains('num') && opData.length == 1:
-            //     if (opData[0].includes('.')){
-            //         break breakme;
-            //     } else {
-                opData[0] += button.textContent;
-                updateDisplay(0); 
+                    opData[0] += (button.textContent);
+                    updateDisplay(0); 
                 break;
-                // }
             case button.classList.contains('num') && opData.length == 2:
                 opData.push (button.textContent);
                 updateDisplay(2);
                 break;
             case button.classList.contains('num') && opData.length == 3:
-                // if (opData[2].includes('.')){
-                //     break breakmee;
-                // } else {
-                opData[2] += (button.textContent);
-                updateDisplay(2);
-                break;
-                // }
+                    opData[2] += (button.textContent);
+                    updateDisplay(2);
+                    break;
+            case button.id == 'point' && opData.length != 2:
+                if (opData.length == 0){
+                    opData.push(button.textContent);
+                    updateDisplay(0);
+                }else if (!opData[opData.length -1].includes('.')){
+                    opData[opData.length -1] += (button.textContent);
+                    updateDisplay(opData.length -1);
+                    break;
+                }
+                break;    
             case button.classList.contains('op') && opData.length == 0:
                 opData.push (0, button.textContent);
                 updateDisplay(1);
@@ -182,11 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         
     }
-
-    // function floatCheck(button){
-    //     if 
-    //     button.disabled = true;
-    // }
 
     function reset(){
         opData = [];
