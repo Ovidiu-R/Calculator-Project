@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let opData = [];
     let displayFlag = false;
     let percentTarget = "";
+    let percentFlag = false;
 
     buttons.forEach (button => {
         button.addEventListener('click', () => {
@@ -19,17 +20,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateDisplay(0);
                 break;
             case button.classList.contains('num') && opData.length == 1:
+            //     if (opData[0].includes('.')){
+            //         break breakme;
+            //     } else {
                 opData[0] += button.textContent;
                 updateDisplay(0); 
                 break;
+                // }
             case button.classList.contains('num') && opData.length == 2:
                 opData.push (button.textContent);
                 updateDisplay(2);
                 break;
             case button.classList.contains('num') && opData.length == 3:
+                // if (opData[2].includes('.')){
+                //     break breakmee;
+                // } else {
                 opData[2] += (button.textContent);
                 updateDisplay(2);
                 break;
+                // }
             case button.classList.contains('op') && opData.length == 0:
                 opData.push (0, button.textContent);
                 updateDisplay(1);
@@ -42,7 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 opData[1] = button.textContent;
                 updateDisplay(1);
                 break;
-            case button.id == 'percent' && opData.length == 1 || opData.length == 3:
+            case button.id == 'percent':
                     if (opData.length == 1) {
                         percentTarget = "first";
                         operate('%');
@@ -154,24 +163,30 @@ document.addEventListener('DOMContentLoaded', () => {
     function operate(operator){
        let a = parseFloat (opData[0]);
        let b = parseFloat (opData[2]);
-       switch (operator){
-        case '+':
-            addition (a,b);
-            break;
-        case '-':
-            subtraction (a,b);
-            break;
-        case '*':
-            multiplication (a,b);
-            break;
-        case '/':
-            division (a,b);
-            break;
-        case '%':
-            percent (a,b);
-            break;
-       }
+        switch (operator){
+            case '+':
+                addition (a,b);
+                break;
+            case '-':
+                subtraction (a,b);
+                break;
+            case '*':
+                multiplication (a,b);
+                break;
+            case '/':
+                division (a,b);
+                break;
+            case '%':
+                percent (a,b);
+                break;
+            }
+        
     }
+
+    // function floatCheck(button){
+    //     if 
+    //     button.disabled = true;
+    // }
 
     function reset(){
         opData = [];
